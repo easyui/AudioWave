@@ -39,7 +39,7 @@ public class AudioWave: UIView {
     //轮训次数
     private var scheduledCount = 0
     //wave的数据源
-    private var waveDataSource = [Int32]()
+    private var waveDataSource = [Double]()
     //刷新定时器
     private var timer : dispatch_source_t?
     //起始位置时间
@@ -217,7 +217,7 @@ public class AudioWave: UIView {
 
 
 public protocol AudioWaveDataSource : NSObjectProtocol {
-    func audioWave(audioWave: AudioWave) -> [Int32];
+    func audioWave(audioWave: AudioWave) -> [Double];
     
 }
 

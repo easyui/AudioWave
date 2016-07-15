@@ -35,12 +35,12 @@ class ViewController: UIViewController ,AudioWaveDataSource{
         self.audioWave?.start()
     }
     
-    private var waveArr = [Int32]()
-    func audioWave(audioWave: AudioWave) -> [Int32]{
+    private var waveArr = [Double]()
+    func audioWave(audioWave: AudioWave) -> [Double]{
         let currentDb = randomInRange(0...100)
 
         let count = self.waveArr.count
-        self.waveArr.append(Int32(currentDb))
+        self.waveArr.append(Double(currentDb))
         
         if count > Int(audioWave.sampleNum){
             self.waveArr.removeAtIndex(0)
