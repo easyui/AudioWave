@@ -51,7 +51,8 @@ public class AudioWave: UIView {
     
     // MARK: - Life cycle
     deinit{
-        
+        self.stop()
+        self.layer.removeAllAnimations()
     }
     
     public override init(frame: CGRect) {
