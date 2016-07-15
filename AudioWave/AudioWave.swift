@@ -12,7 +12,7 @@ import Foundation
 public class AudioWave: UIView {
     //数据源代理
     public weak  var dataSource: AudioWaveDataSource?
-    //刷新频率
+    //刷新频率,单位秒
     public var intervalTime = 0.025 {
         didSet {
             self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
@@ -45,7 +45,7 @@ public class AudioWave: UIView {
     //起始位置时间
     private var beginTime = 0.0
     //起始打点时间
-    private var beginTimePoint = 0.0
+    private var beginTimePoint = 0
     //宽度里显示的完整秒数
     private var secondsInWidth: Double = 0
     
@@ -97,10 +97,10 @@ public class AudioWave: UIView {
             //            time = time * 10.0
             //            time = round(time) / 10
             if Double(i) * sampleWidth > Double(self.bounds.width) {
-                beginTime =   timePoint - time
+                self.beginTime =   timePoint - time
                 //                beginTime = beginTime * 10.0
                 //                beginTime = round(beginTime) / 10
-                beginTimePoint += 1
+                self.beginTimePoint += 1
                 break;
             }
             //            if time - timePoint {
@@ -112,11 +112,11 @@ public class AudioWave: UIView {
             
             //            if( fabs((time) - (timePoint)) < DBL_EPSILON ){
             //draw time point
-            if( (i + Int(beginTimePoint)) % countInSecnond == 0 ){
+            if( (i + self.beginTimePoint) % countInSecnond == 0 ){
                 timePoint += 1.0
                 
                 //time point line
-                let x = Double(i) * sampleWidth - 0.5;
+                let x = Double(i) * self.sampleWidth - 0.5;
                 let  bezierPath =  UIBezierPath(rect:  CGRectMake(CGFloat(x), 0, 1, 6))
                 self.timePointColor.setFill()
                 bezierPath.fill()
@@ -136,7 +136,7 @@ public class AudioWave: UIView {
                 let textContent: String = self.formatRecordTime(time + timeSpace)//String(format: "%.0f", time + sss)
                 var textRect = CGRectMake(CGFloat(textAtX), 8, CGFloat(widthMax), 12)
                 let textStyle = NSMutableParagraphStyle()
-                if beginTimePoint == 0.0  && i == 0{
+                if self.beginTimePoint == 0  && i == 0{
                     //                    textStyle.alignment = NSTextAlignment.Left
                     //                    textRect = CGRectMake(CGFloat(textAtX) + 2, 8, CGFloat(widthMax), 12)
                     textRect = CGRectMake(CGFloat(textAtX) + 12, 8, CGFloat(widthMax), 12)
