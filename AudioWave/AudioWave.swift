@@ -93,25 +93,12 @@ public class AudioWave: UIView {
             }
             
             let time = Double(i) * self.intervalTime;
-            //            time = Double(String(format: "%.1f", time))!
-            //            time = time * 10.0
-            //            time = round(time) / 10
             if Double(i) * sampleWidth > Double(self.bounds.width) {
                 self.beginTime =   timePoint - time
-                //                beginTime = beginTime * 10.0
-                //                beginTime = round(beginTime) / 10
                 self.beginTimePoint += 1
                 break;
             }
-            //            if time - timePoint {
-            //            let x = Double(i) * sampleWidth - 0.5;
-            //
-            //            let  bezierPath =  UIBezierPath(rect:  CGRectMake(CGFloat(x), 0, 1, 6))
-            //            UIColor.whiteColor().setFill()
-            //            bezierPath.fill()
-            
-            //            if( fabs((time) - (timePoint)) < DBL_EPSILON ){
-            //draw time point
+
             if( (i + self.beginTimePoint) % countInSecnond == 0 ){
                 timePoint += 1.0
                 
@@ -137,13 +124,9 @@ public class AudioWave: UIView {
                 var textRect = CGRectMake(CGFloat(textAtX), 8, CGFloat(widthMax), 12)
                 let textStyle = NSMutableParagraphStyle()
                 if self.beginTimePoint == 0  && i == 0{
-                    //                    textStyle.alignment = NSTextAlignment.Left
-                    //                    textRect = CGRectMake(CGFloat(textAtX) + 2, 8, CGFloat(widthMax), 12)
                     textRect = CGRectMake(CGFloat(textAtX) + 12, 8, CGFloat(widthMax), 12)
                 }
-                //                else {
-                //                    textStyle.alignment = NSTextAlignment.Center
-                //                }
+
                 textStyle.alignment = NSTextAlignment.Center
                 
                 let textFontAttributes: [String : AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(8.0), NSForegroundColorAttributeName: self.timePointColor, NSParagraphStyleAttributeName: textStyle]
