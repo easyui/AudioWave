@@ -23,13 +23,13 @@ public class AudioWave: UIView {
     //sampel宽度
     public var sampleWidth = 3.0 {
         didSet {
-            self.sampleNum = ceil(Double(self.bounds.size.width) / self.sampleWidth)
+            self.sampleNum = Int(ceil(Double(self.bounds.size.width) / self.sampleWidth))
             self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
             self.setNeedsDisplay()
         }
     }
     //sampel个数
-    public private(set) var sampleNum = 0.0
+    public private(set) var sampleNum = 0
     
     public  var waveColor = UIColor.redColor()
     public  var xLineColor = UIColor.yellowColor()
@@ -189,7 +189,7 @@ public class AudioWave: UIView {
     // MARK: - Private methods
     private func commonInit(){
         self.backgroundColor = UIColor.darkGrayColor()
-        self.sampleNum = ceil(Double(self.bounds.size.width) / self.sampleWidth)
+        self.sampleNum = Int(ceil(Double(self.bounds.size.width) / self.sampleWidth))
         self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
         
     }
