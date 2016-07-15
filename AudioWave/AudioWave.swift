@@ -15,7 +15,7 @@ public class AudioWave: UIView {
     //刷新频率,单位秒
     public var intervalTime = 0.025 {
         didSet {
-            self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
+            self.secondsInWidth = Int(floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime)))
             self.setNeedsDisplay()
         }
         
@@ -24,7 +24,7 @@ public class AudioWave: UIView {
     public var sampleWidth = 3.0 {
         didSet {
             self.sampleNum = Int(ceil(Double(self.bounds.size.width) / self.sampleWidth))
-            self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
+            self.secondsInWidth = Int(floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime)))
             self.setNeedsDisplay()
         }
     }
@@ -47,7 +47,7 @@ public class AudioWave: UIView {
     //起始打点时间
     private var beginTimePoint = 0
     //宽度里显示的完整秒数
-    private var secondsInWidth: Double = 0
+    private var secondsInWidth = 0
     
     // MARK: - Life cycle
     deinit{
@@ -129,7 +129,7 @@ public class AudioWave: UIView {
                 
                 let context: CGContextRef = UIGraphicsGetCurrentContext()!
                 var timeSpace = 0.0
-                timeSpace = Double(self.scheduledCount) * self.intervalTime - self.secondsInWidth
+                timeSpace = Double(self.scheduledCount) * self.intervalTime - Double(self.secondsInWidth)
                 if timeSpace < 0 {
                     timeSpace = 0.0
                 }
@@ -190,7 +190,7 @@ public class AudioWave: UIView {
     private func commonInit(){
         self.backgroundColor = UIColor.darkGrayColor()
         self.sampleNum = Int(ceil(Double(self.bounds.size.width) / self.sampleWidth))
-        self.secondsInWidth = floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime))
+        self.secondsInWidth = Int(floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime)))
         
     }
     
