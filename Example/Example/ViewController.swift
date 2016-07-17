@@ -11,6 +11,7 @@ import AudioWave
 class ViewController: UIViewController ,AudioWaveDataSource{
     var audioWave: AudioWave?
     @IBOutlet weak var waveContainer: UIView!
+    @IBOutlet weak var audioWaveFromXib: AudioWave!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,15 +25,22 @@ class ViewController: UIViewController ,AudioWaveDataSource{
     }
 
     @IBAction func recordAction(sender: AnyObject) {
+        
         self.audioWave?.dataSource = nil
         self.audioWave?.stop()
         self.audioWave?.removeFromSuperview()
         self.audioWave = nil
         self.audioWave = AudioWave(frame: CGRectMake(self.waveContainer.bounds.origin.x, self.waveContainer.bounds.origin.y, self.waveContainer.bounds.size.width - 2, self.waveContainer.bounds.size.height))
         self.waveContainer.addSubview(self.audioWave!)
-        //        self.audioWave?.backgroundColor = UIColor.redColor()
+        self.audioWave?.intervalTime = 0.025
+        self.audioWave?.sampleWidth = 3
         self.audioWave?.dataSource = self
         self.audioWave?.start()
+ 
+
+        self.audioWaveFromXib?.dataSource = self
+        self.audioWaveFromXib?.start()
+ 
     }
     
     private var waveArr = [Double]()

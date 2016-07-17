@@ -7,33 +7,37 @@
 //
 
 import Foundation
-
-
+@IBDesignable
 public class AudioWave: UIView {
+    
+    @IBInspectable  public  var waveColor: UIColor = UIColor.redColor()
+    @IBInspectable  public  var xLineColor: UIColor = UIColor.yellowColor()
+    @IBInspectable  public  var timePointColor: UIColor = UIColor.whiteColor()
+    @IBInspectable  public  var showTimePoint: Bool = true
+
+    
     //数据源代理
     public weak  var dataSource: AudioWaveDataSource?
     //刷新频率,单位秒
-    public var intervalTime = 0.025 {
+    @IBInspectable public var intervalTime: Double = 0.025 {
         didSet {
             self.secondsInWidth = Int(floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime)))
-            self.setNeedsDisplay()
+            //            self.setNeedsDisplay()
         }
         
     }
     //sampel宽度
-    public var sampleWidth = 3.0 {
+    @IBInspectable public var sampleWidth: Double = 3.0 {
         didSet {
             self.sampleNum = Int(ceil(Double(self.bounds.size.width) / self.sampleWidth))
             self.secondsInWidth = Int(floor(Double(self.bounds.size.width) / (self.sampleWidth / self.intervalTime)))
-            self.setNeedsDisplay()
+            //            self.setNeedsDisplay()
         }
     }
     //sampel个数
     public private(set) var sampleNum = 0
     
-    public  var waveColor = UIColor.redColor()
-    public  var xLineColor = UIColor.yellowColor()
-    public  var timePointColor = UIColor.whiteColor()
+    
     
     
     //轮训次数
@@ -81,25 +85,33 @@ public class AudioWave: UIView {
         var timePoint = 0.0 + beginTime;
         let count = self.waveDataSource.count
         let countInSecnond = Int(1.0 / self.intervalTime)
+        var timePointViewHiehgt = 20.0
+        if self.showTimePoint == false {
+            timePointViewHiehgt = 0.0
+        }
         for i in 0 ..< scheduledCount{
             //draw wave
             if i < count{
                 let wavePoint = self.waveDataSource[i]
                 var height = 0.0
-                height = ((Double(wavePoint) + 0) / 100.0) * (Double(self.bounds.size.height) - 20.0)
-                let rect = CGRectMake(CGFloat(Double(i)*sampleWidth + 1.0), CGFloat(((Double(self.bounds.size.height) - 20.0)-height)/2.0 + 20.0), CGFloat(sampleWidth - 2.0), CGFloat(height));
+                height = ((Double(wavePoint) + 0) / 100.0) * (Double(self.bounds.size.height) - timePointViewHiehgt)
+                let rect = CGRectMake(CGFloat(Double(i)*sampleWidth + 1.0), CGFloat(((Double(self.bounds.size.height) - timePointViewHiehgt)-height)/2.0 + timePointViewHiehgt), CGFloat(sampleWidth - 2.0), CGFloat(height));
                 self.waveColor.setFill()
                 UIRectFill(rect);
                 
+            }
+            
+            if self.showTimePoint == false {
+                continue
             }
             
             let time = Double(i) * self.intervalTime;
             if Double(i) * sampleWidth > Double(self.bounds.width) {
                 self.beginTime =   timePoint - time
                 self.beginTimePoint += 1
-                break;
+                break
             }
-
+            
             if( (i + self.beginTimePoint) % countInSecnond == 0 ){
                 timePoint += 1.0
                 
@@ -127,7 +139,7 @@ public class AudioWave: UIView {
                 if self.beginTimePoint == 0  && i == 0{
                     textRect = CGRectMake(CGFloat(textAtX) + 12, 8, CGFloat(widthMax), 12)
                 }
-
+                
                 textStyle.alignment = NSTextAlignment.Center
                 
                 let textFontAttributes: [String : AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(8.0), NSForegroundColorAttributeName: self.timePointColor, NSParagraphStyleAttributeName: textStyle]
@@ -162,10 +174,10 @@ public class AudioWave: UIView {
     }
     
     public func stop(){
-        
-        dispatch_source_cancel(self.timer!)
-        self.timer = nil
-        
+        if self.timer != nil {
+            dispatch_source_cancel(self.timer!)
+            self.timer = nil
+        }
     }
     
     

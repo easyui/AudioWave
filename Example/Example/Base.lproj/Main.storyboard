@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -34,18 +35,32 @@
                                     <action selector="recordAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nl4-8c-Def"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kY4-Bd-CD7" customClass="AudioWave" customModule="AudioWave">
+                                <rect key="frame" x="20" y="310" width="560" height="120"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="dcY-sX-9QU"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showTimePoint" value="NO"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hj9-k2-G9O" secondAttribute="trailing" id="130-7v-GFF"/>
+                            <constraint firstItem="kY4-Bd-CD7" firstAttribute="top" secondItem="hj9-k2-G9O" secondAttribute="bottom" constant="10" id="8ha-lL-2dK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kY4-Bd-CD7" secondAttribute="trailing" id="JGg-Th-ori"/>
                             <constraint firstItem="hj9-k2-G9O" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="100" id="KUn-pz-cJ0"/>
                             <constraint firstItem="d1F-AU-dw7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="PpZ-Fo-VNG"/>
                             <constraint firstItem="d1F-AU-dw7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gDa-hC-mJ5"/>
                             <constraint firstItem="hj9-k2-G9O" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="h0x-in-oJm"/>
+                            <constraint firstItem="kY4-Bd-CD7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="nno-Ek-K8k"/>
                             <constraint firstAttribute="trailing" secondItem="d1F-AU-dw7" secondAttribute="trailing" id="q0P-ov-BGX"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="audioWaveFromXib" destination="kY4-Bd-CD7" id="f4n-a4-HHm"/>
                         <outlet property="waveContainer" destination="hj9-k2-G9O" id="qn1-45-zGN"/>
                     </connections>
                 </viewController>
