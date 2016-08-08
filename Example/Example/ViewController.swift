@@ -18,10 +18,8 @@ class ViewController: UIViewController ,AudioWaveDataSource{
         // Do any additional setup after loading the view, typically from a nib.
         
     }
-    @IBOutlet weak var audioWaveFromXib: AudioWave!
     
-    self.audioWaveFromXib?.dataSource = self
-    self.audioWaveFromXib?.start()
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
